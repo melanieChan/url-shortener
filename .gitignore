@@ -1,4 +1,4 @@
 
 .DS_Store
 backend/shortcuts.json
-backend/user_files/
+backend/static/user_files/*

@@ -37,9 +37,9 @@ def shorten():
 
         # save with shortcut name (since shortcut should be unique) in case multiple independent files uploaded have same name
         custom_file_path = request.form['new_shortcut_name_input'] + secure_filename(file.filename)
-        current_dir = os.path.dirname(os.path.realpath(__file__)) + '/user_files/'
+        current_dir = os.path.dirname(os.path.realpath(__file__)) + '/static/user_files/'
         file.save(current_dir + custom_file_path)
-        
+
         response['file'] = custom_file_path
 
     # save new shortcut to json file
@@ -50,6 +50,14 @@ def shorten():
     return json.dumps(response)
 
 # link that doesn't exist
-@app.route('/<nonexistent_path>')
-def redirect_back_home(nonexistent_path=None):
-    return redirect(url_for('home'))
+@app.route('/<shortcut_path>')
+def redirect_to_url(shortcut_path):
+    if os.path.exists('shortcuts.json'): # find file
+        with open('shortcuts.json') as shortcuts_file:
+            shortcuts = json.load(shortcuts_file) # get data from file
+            if shortcut_path in shortcuts.keys(): # search for specific shortcut
+                # go to url or file using shortcut
+                if 'url' in shortcuts[shortcut_path].keys():
+                    return redirect(shortcuts[shortcut_path]['url'])
+                else:
+                    return redirect(url_for('static', filename='user_files/' + shortcuts[shortcut_path]['file']))
