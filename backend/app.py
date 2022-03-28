@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import json
 
 app = Flask(__name__)
 
@@ -11,6 +12,11 @@ def home():
 def shorten():
     new_shortcut_input = request.form['new_shortcut_name_input']
     original_url_input = request.form['original_url_input']
+
+    shortcut = {}
+    shortcut[new_shortcut_input] = {'url': original_url_input}
+    with open('shortcuts.json', 'w') as shortcuts_file:
+        json.dump(shortcut, shortcuts_file)
 
     return new_shortcut_input
 
