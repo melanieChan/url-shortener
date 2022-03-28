@@ -24,7 +24,7 @@ def shorten():
 
     # don't proceed to saving data if user tries to use the same shortcut name
     if new_shortcut_input in shortcuts.keys():
-        response['error'] = 'Shortcut name already in use. It redirects to ' + shortcuts[new_shortcut_input]['url'];
+        response['error'] = 'Shortcut name already in use. It redirects to <a href="' + shortcuts[new_shortcut_input]['url'] + '" target="_blank" rel="noopener noreferrer">' + shortcuts[new_shortcut_input]['url'] + '</a>';
         return json.dumps(response)
 
     response['url'] = original_url_input
