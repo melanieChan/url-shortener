@@ -30,7 +30,7 @@ def shorten():
         return json.dumps(response)
 
     # save new shortcut and its (url or file)
-    if 'url' in request.form.keys():
+    if 'original_url_input' in request.form.keys():
         response['url'] = request.form['original_url_input']
     else:
         file = request.files['file'] # get user's input file
