@@ -37,7 +37,7 @@ def shorten():
 
         # save with shortcut name (since shortcut should be unique) in case multiple independent files uploaded have same name
         custom_file_path = request.form['new_shortcut_name_input'] + secure_filename(file.filename)
-        current_dir = os.path.dirname(os.path.realpath(__file__))
+        current_dir = os.path.dirname(os.path.realpath(__file__)) + '/user_files/'
         file.save(current_dir + custom_file_path)
         
         response['file'] = custom_file_path
