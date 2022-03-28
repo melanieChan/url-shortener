@@ -115,12 +115,12 @@
         <div class="row">
           <!-- Website Shortener -->
           <div class="col-lg-6">
-            <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up">
+            <form action="shorten" method="post" role="form" class="php-email-form" data-aos="fade-up">
               <div class="form-group">
-                <input placeholder="new-shortcut-name" type="text" name="name" class="form-control" id="name" required>
+                <input placeholder="new-shortcut-name" type="text" name="new_shortcut_name_input" class="form-control" id="name" required>
               </div>
               <div class="form-group mt-3">
-                <input placeholder="https://original-url.com" type="url" class="form-control" name="url" id="url" required>
+                <input placeholder="https://original-url.com" type="url" class="form-control" name="original_url_input" id="url" required>
               </div>
               <div class="my-3">
                 <div class="loading">Loading</div>
@@ -133,7 +133,7 @@
 
           <!-- File Shortener -->
           <div class="col-lg-6">
-            <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up">
+            <form action="" role="form" class="php-email-form" data-aos="fade-up">
               <div class="form-group">
                 <input placeholder="new-shortcut-name" type="text" name="code" class="form-control" id="name" required>
               </div>
@@ -155,11 +155,9 @@
     <!-- List of Shortened Links -->
     <section id="shortened-links" class="features">
       <div class="container">
-
         <div class="section-title">
           <h2>Shortened Links</h2>
         </div>
-
         <div class="row no-gutters">
           <div class="col-xl-7 d-flex align-items-stretch order-2 order-lg-1">
             <div class="content d-flex flex-column justify-content-center">
@@ -194,6 +192,9 @@
                   <h4>Explicabo consectetur</h4>
                   <p>Est autem dicta beatae suscipit. Sint veritatis et sit quasi ab aut inventore</p>
                 </div>
+
+                <div id="link"></div>
+
               </div>
             </div>
           </div>

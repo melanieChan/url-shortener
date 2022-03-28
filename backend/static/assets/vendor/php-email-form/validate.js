@@ -64,12 +64,17 @@
     })
     .then(data => {
       thisForm.querySelector('.loading').classList.remove('d-block');
+      var linkDiv = document.getElementById('link');
+      linkDiv.textContent = data;
+      document.getElementById('shortened-links').scrollIntoView({behavior: "smooth"});
+      /*
       if (data.trim() == 'OK') {
         thisForm.querySelector('.sent-message').classList.add('d-block');
         thisForm.reset(); 
       } else {
         throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
       }
+      */
     })
     .catch((error) => {
       displayError(thisForm, error);
