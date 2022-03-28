@@ -14,6 +14,7 @@ def shorten():
     new_shortcut_input = request.form['new_shortcut_name_input']
     original_url_input = request.form['original_url_input']
 
+    response = {}
     shortcuts = {} # data of all shortcuts will be saved into file
 
     # save to existing file that already has previously made shortcuts
@@ -23,14 +24,17 @@ def shorten():
 
     # don't procceed to saving data if user tries to use the same shortcut name
     if new_shortcut_input in shortcuts.keys():
-        return shortcuts[new_shortcut_input]
+        response['error'] = 'Shortcut name already in use. It redirects to ' + shortcuts[new_shortcut_input]['url'];
+        return json.dumps(response)
+
+    response['url'] = original_url_input
 
     # save new shortcut to json file
-    shortcuts[new_shortcut_input] = {'url': original_url_input}
+    shortcuts[new_shortcut_input] = response
     with open('shortcuts.json', 'w') as shortcuts_file:
         json.dump(shortcuts, shortcuts_file)
 
-    return new_shortcut_input
+    return json.dumps(response)
 
 # link that doesn't exist
 @app.route('/<nonexistent_path>')

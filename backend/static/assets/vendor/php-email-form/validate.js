@@ -64,10 +64,13 @@
     })
     .then(data => {
       thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data) {
+      let response = JSON.parse(data);
+      if (response.url) {
         var linkDiv = document.getElementById('link');
-        linkDiv.textContent = data;
+        linkDiv.textContent = response.url;
         document.getElementById('shortened-links').scrollIntoView({behavior: "smooth"});
+      } else if (response.error) {
+        throw new Error(response.error);
       } else {
         throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action);
       }
