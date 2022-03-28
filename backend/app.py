@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -13,3 +13,8 @@ def shorten():
     original_url_input = request.form['original_url_input']
 
     return new_shortcut_input
+
+# link that doesn't exist
+@app.route('/<nonexistent_path>')
+def redirect_back_home(nonexistent_path=None):
+    return redirect(url_for('home'))
