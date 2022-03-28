@@ -65,9 +65,9 @@
     .then(data => {
       thisForm.querySelector('.loading').classList.remove('d-block');
       let response = JSON.parse(data);
-      if (response.url) {
+      if (response.url || response.file) {
         var linkDiv = document.getElementById('link');
-        linkDiv.textContent = response.url;
+        linkDiv.textContent = response.url || response.file;
         document.getElementById('shortened-links').scrollIntoView({behavior: "smooth"});
       } else if (response.error) {
         throw new Error(response.error);

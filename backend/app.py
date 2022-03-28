@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import json
 import os.path
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -12,7 +13,6 @@ def home():
 @app.route('/shorten', methods=['GET', 'POST'])
 def shorten():
     new_shortcut_input = request.form['new_shortcut_name_input']
-    original_url_input = request.form['original_url_input']
 
     response = {}
     shortcuts = {} # data of all shortcuts will be saved into file
@@ -24,10 +24,23 @@ def shorten():
 
     # don't proceed to saving data if user tries to use the same shortcut name
     if new_shortcut_input in shortcuts.keys():
-        response['error'] = 'Shortcut name already in use. It redirects to <a href="' + shortcuts[new_shortcut_input]['url'] + '" target="_blank" rel="noopener noreferrer">' + shortcuts[new_shortcut_input]['url'] + '</a>';
+        # get existing url or file associated with shortcut
+        current_link = shortcuts[new_shortcut_input]['url'] if 'url' in shortcuts[new_shortcut_input] else shortcuts[new_shortcut_input]['file']
+        response['error'] = 'Shortcut name already in use. It redirects to <a href="' + current_link + '" target="_blank" rel="noopener noreferrer">' + current_link + '</a>';
         return json.dumps(response)
 
-    response['url'] = original_url_input
+    # save new shortcut and its (url or file)
+    if 'url' in request.form.keys():
+        response['url'] = request.form['original_url_input']
+    else:
+        file = request.files['file'] # get user's input file
+
+        # save with shortcut name (since shortcut should be unique) in case multiple independent files uploaded have same name
+        custom_file_path = request.form['new_shortcut_name_input'] + secure_filename(file.filename)
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        file.save(current_dir + custom_file_path)
+        
+        response['file'] = custom_file_path
 
     # save new shortcut to json file
     shortcuts[new_shortcut_input] = response
