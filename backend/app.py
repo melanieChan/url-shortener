@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, abort
 import json
 import os.path
 from werkzeug.utils import secure_filename
@@ -61,3 +61,9 @@ def redirect_to_url(shortcut_path):
                     return redirect(shortcuts[shortcut_path]['url'])
                 else:
                     return redirect(url_for('static', filename='user_files/' + shortcuts[shortcut_path]['file']))
+    return abort(404)
+
+# link that doesn't exist
+# @app.errorhandler(404)
+# def page_not_found(error):
+#     return '<h1>Not found</h1>', 404
