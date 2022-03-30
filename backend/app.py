@@ -8,7 +8,8 @@ app.secret_key = "urlshortener"
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    # pass data from cookies to be displayed
+    return render_template('index.html', shortcut_names=session.keys())
 
 # function ran after user clicks submit button on form
 @app.route('/shorten', methods=['GET', 'POST'])
