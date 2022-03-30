@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, abort
+from flask import Flask, render_template, request, redirect, url_for, abort, session
 import json
 import os.path
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.secret_key = "urlshortener"
 
 @app.route('/')
 def home():
@@ -42,10 +43,11 @@ def shorten():
 
         response['file'] = custom_file_path
 
-    # save new shortcut to json file
+    # save new shortcut to json file and cookie
     shortcuts[new_shortcut_input] = response
     with open('shortcuts.json', 'w') as shortcuts_file:
         json.dump(shortcuts, shortcuts_file)
+        session[new_shortcut_input] = True
 
     return json.dumps(response)
 
