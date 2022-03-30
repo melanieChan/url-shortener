@@ -757,7 +757,7 @@ section {
   outline: none;
   cursor: pointer;
 }
-.faq .accordion-list .bi-book-half, .faq .accordion-list .bi-pencil-fill {
+.faq .accordion-list .bi-book-half {
   font-size: 18px;
   position: absolute;
   right: 0;
